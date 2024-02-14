@@ -3,7 +3,7 @@ import React from 'react';
 function TaskCreate() {
   return (
     <div className="bg-gray-200 min-h-screen p-8">
-      <div className="container mx-auto max-w-7xl bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div className="container mx-auto max-w-6xl bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <h1 className="text-2xl font-bold text-gray-700 text-left">Create New Task</h1>
         </div>

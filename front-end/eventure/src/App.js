@@ -9,6 +9,7 @@ import EventDetails from './pages/EventDetails';
 import TaskCreate from './pages/TaskCreate';
 import Home from './pages/Home';
 import Footer from './pages/Footer';
+import Profile from './pages/Profile';
 import Auth from './components/Auth';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/create-event" element={<PrivateRoute><EventCreate /></PrivateRoute>} />
           <Route path="/event-details" element={<PrivateRoute><EventDetails /></PrivateRoute>} />
           <Route path="/create-task" element={<PrivateRoute><TaskCreate /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="/login" element={<Auth />} />
           <Route path="/signup" element={<Auth />} />
           <Route path="*" element={<Navigate to="/" replace />} />
