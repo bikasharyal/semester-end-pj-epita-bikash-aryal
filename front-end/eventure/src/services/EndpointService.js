@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://your-backend-api.com/api';
+const API_BASE_URL = 'http://127.0.0.1:8080/api/v1';
 
 // Create an Axios instance
 const api = axios.create({
@@ -27,22 +27,15 @@ if (storedToken) {
 
 // Login request
 export const postLogin = async (data) => {
-//   const response = await api.post('/login', data);
-//   const { token } = response.data;
-//   localStorage.setItem('token', token);
-// setAuthToken(token);
-//   return response.data;
-
-    const token = 'tt-3s4d5f6ghujsjfhskjdhfkjhska7y8u3wirs4d5f6g7hijmnsbdhf';  
-    return {token:token};
+  const response = await api.post('auth/login', data);
+    //const { token } = response.data;
+   return response.data.data;
+    // const token = 'tt-3s4d5f6ghujsjfhskjdhfkjhska7y8u3wirs4d5f6g7hijmnsbdhf';  
+    // return {token:token};
 };
 
 // Registration request
 export const postRegister = async (data) => {
-//   const response = await api.post('/register', data);
-//   const { token } = response.data;
-//   localStorage.setItem('token', token);
-//   setAuthToken(token);
-//   return response.data;
-    return 'register test success';
+  const response = await api.post('auth/register', data);
+  return response.data;
 };

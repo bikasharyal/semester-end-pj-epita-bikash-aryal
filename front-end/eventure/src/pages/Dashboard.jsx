@@ -1,6 +1,9 @@
 import React from 'react';
+import { useAuth } from '../contexts/AuthContext'
 
 function Dashboard() {
+  const { userId } = useAuth();
+
   return (
     <div className="bg-gray-200 min-h-screen p-8">
       <div className="container mx-auto max-w-6xl bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4"> {/* Adjusted max-width here */}

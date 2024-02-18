@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+// import { useMessage } from '../contexts/MessageContext';
 
 // Simulated user data and events
 const userData = {
@@ -15,9 +17,11 @@ const userEvents = [
 ];
 
 function Profile() {
+  const { userId } = useAuth();
   const [user, setUser] = useState(userData);
   const [editMode, setEditMode] = useState(false);
-
+  // const { showMessage } = useMessage();
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
