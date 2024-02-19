@@ -3,7 +3,7 @@ import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-const AdminRoute = ({ children }) => {
+export const AdminRoute = ({ children }) => {
   const { authToken, userRole } = useAuth();
   let location = useLocation();
 
