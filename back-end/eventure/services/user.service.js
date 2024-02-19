@@ -1,11 +1,18 @@
 const userModel = require("../models/userModel");
 const bcrypt = require('bcrypt');
+const mongoose = require('mongoose');
 
 const getUserById = async (id) => {
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Id");
+  }
+
   const user = await userModel.findOne({ _id: id, isActive: true }, '-password');  // Excludes the password field from the result
   if (!user) {
     throw new Error("User not found");
   }
+
   return user;
 };
 
@@ -14,12 +21,12 @@ const getAllUsers = async () => {
   return users;
 };
 
-const createUser = async (req, res) => {
+const createUser = async (req) => {
   const { name, email, password, contact, address, preferences } = req.body;
 
   // checkig for missing information
   if (!email || !password || !name) {
-    return res.status(400).json({ error: "missing information" });
+    throw new Error("missing information");
   } else {
     const hash = bcrypt.hashSync(password, 10); // hasing and salting our password
 
@@ -32,25 +39,31 @@ const createUser = async (req, res) => {
         contact,
         address,
         preferences,
+        needPasswordUpdate:true
       });
 
       const user = await User.save();
-      return res.status(200).json(user);
+      return user;
     } catch (error) {
-      return res.status(500).json({ error: error.message });
+      throw new Error( error.message);
     }
   }
 };
 
 const updateUser = async (id, updates) => {
-  const { name, contact, address, preferences } = updates;
+  const { name, contact, role, address, preferences } = updates;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Id");
+  }
+  
 
   if (!id || !name) {
-    return res.status(400).json({ error: "missing information" });
+    throw new Error("missing information");
   } else {
     const updatedUser = await userModel.findByIdAndUpdate(
       id,
-      { $set: { name, contact, address, preferences } },
+      { $set: { name, contact, address, role, preferences } },
       { new: true, runValidators: true } // Returns the updated document and runs validators
     ).select('-password'); // Exclude password from the output
 
@@ -63,10 +76,13 @@ const updateUser = async (id, updates) => {
 };
 
 const updateUserPassword = async (id, updates) => {
-  const { email, oldPassword, newPassword } = updates;
+  const { oldPassword, newPassword } = updates;
   
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Id");
+  }
   // Assuming function is called within a context where `res` is not available
-  if (!id || !oldPassword || !email || !newPassword) {
+  if (!id || !oldPassword || !newPassword) {
     throw new Error("Missing information");
   }
   
@@ -101,6 +117,9 @@ const updateUserPassword = async (id, updates) => {
 
 const deleteUser = async (id) => {
 
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Id");
+  }
   // Find user by ID
   const user = await userModel.findById(id);
   if (!user) {

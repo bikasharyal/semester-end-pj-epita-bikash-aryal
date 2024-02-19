@@ -33,6 +33,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get All task by userId
+router.get("/allUserTasks/:id", async (req, res) => {
+  try {
+    const task = await taskService.getAllUserTasks(req.params.id);
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update Task
 router.put("/:id", async (req, res) => {
   try {

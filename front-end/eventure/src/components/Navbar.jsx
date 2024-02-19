@@ -17,13 +17,13 @@ function Navbar() {
           <Link to="/dashboard" className="hover:text-blue-400">Dashboard</Link>
         </li>
         <li>
-          <Link to="/create-event" className="hover:text-blue-400">Events</Link>
+          <Link to="events" className="hover:text-blue-400">Events</Link>
         </li>
         <li>
           <Link to="/event-details" className="hover:text-blue-400">Event Details</Link>
         </li>
         <li>
-          <Link to="/create-task" className="hover:text-blue-400">Tasks</Link>
+          <Link to="/tasks" className="hover:text-blue-400">Tasks</Link>
         </li>
         <li>
           <Link to="/profile" className="hover:text-blue-400">Profile</Link>

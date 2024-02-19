@@ -33,6 +33,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get All Events by userId
+router.get("/byUserId/:id", async (req, res) => {
+  try {
+    const events = await eventService.getEventsByUserId(req.params.id);
+    res.status(200).json(events);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update Event
 router.put("/:id", async (req, res) => {
   try {

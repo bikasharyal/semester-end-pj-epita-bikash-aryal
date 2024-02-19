@@ -1,5 +1,6 @@
 // task.service.js
 const TaskModel = require("../models/taskModel");
+const mongoose = require('mongoose');
 
 const createTask = async (taskData) => {
   const task = new TaskModel(taskData);
@@ -8,7 +9,11 @@ const createTask = async (taskData) => {
 };
 
 const getTaskById = async (id) => {
-  const task = await TaskModel.findById(id).populate('assignedTo', 'name -_id').populate('eventId', 'title -_id');
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Id");
+  }
+  const task = await TaskModel.findById(id);
   if (!task) {
     throw new Error("Task not found");
   }
@@ -16,11 +21,64 @@ const getTaskById = async (id) => {
 };
 
 const getAllTasks = async () => {
-  const tasks = await TaskModel.find({});
-  return tasks;
+  const tasks = await TaskModel.find({})
+    .populate({
+      path: 'assignedTo',
+      select: 'name' 
+    })
+    .populate({
+      path: 'eventId',
+      select: 'title'
+    })
+    .lean(); // Convert Mongoose documents to plain JavaScript objects
+
+  // Map over tasks to rename fields for frontend consumption
+  const modifiedTasks = tasks.map(task => ({
+    ...task,
+    assignedToName: task.assignedTo ? task.assignedTo.name : null, // Handle potential null values
+    eventName: task.eventId ? task.eventId.title : null
+  }));
+
+  return modifiedTasks;
 };
 
+const getAllUserTasks = async (userId) => {
+   // Validate the userId
+   if (!mongoose.Types.ObjectId.isValid(userId)) {
+    throw new Error("Invalid Id");
+  }
+  const currentDate = new Date();
+
+  const tasks = await TaskModel.find({
+    assignedTo: userId,
+    deadline: { $gte: currentDate }
+  })
+  .populate({
+    path: 'assignedTo',
+    select: 'name' 
+  })
+  .populate({
+    path: 'eventId',
+    select: 'title'
+  })
+  .lean();
+  
+  // Map over tasks to rename fields for frontend consumption
+  const modifiedTasks = tasks.map(task => ({
+    ...task,
+    assignedToName: task.assignedTo ? task.assignedTo.name : null, // Handle potential null values
+    eventName: task.eventId ? task.eventId.title : null
+  }));
+
+  return modifiedTasks;
+};
+
+
 const updateTask = async (id, updates) => {
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Id");
+  }
   const task = await TaskModel.findByIdAndUpdate(id, { $set: updates }, { new: true });
   if (!task) {
     throw new Error("Task not found or update failed");
@@ -29,6 +87,10 @@ const updateTask = async (id, updates) => {
 };
 
 const deleteTask = async (id) => {
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new Error("Invalid Id");
+  }
   const task = await TaskModel.findByIdAndDelete(id);
   if (!task) {
     throw new Error("Task not found or deletion failed");
@@ -42,4 +104,5 @@ module.exports = {
   getAllTasks,
   updateTask,
   deleteTask,
+  getAllUserTasks,
 };

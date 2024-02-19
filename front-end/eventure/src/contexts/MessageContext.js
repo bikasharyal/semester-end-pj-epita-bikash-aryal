@@ -5,7 +5,6 @@ const MessageContext = createContext();
 
 export const useMessage = () => {
   const context = useContext(MessageContext);
-  console.log(context); // Check what's being returned here
   return context;
 };
 

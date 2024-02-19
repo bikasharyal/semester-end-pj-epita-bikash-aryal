@@ -64,7 +64,7 @@ const login = async (req, res) => {
     //   }
     // );
 
-    return res.status(200).json({ data: { "token": "tt-3s4d5f6ghujsjfhskjdhfkjhska7y8u3wirs4d5f6g7hijmnsbdhf",userId:user._id } });
+    return res.status(200).json({ "token": "tt-3s4d5f6ghujsjfhskjdhfkjhska7y8u3wirs4d5f6g7hijmnsbdhf", userId:user._id, userRole:user.role });
   }
 };
 

@@ -42,7 +42,7 @@ router.put("/:id", async (req, res) => {
 
 router.put("/updatePassword/:id", async (req, res) => {
   const { id } = req.params;
-  const updates = req.body; // Expecting { email, oldPassword, oldPassword }
+  const updates = req.body; // Expecting { email, oldPassword, newPassword }
 
   try {
     const updatedUserPass = await userService.updateUserPassword(id, updates);
@@ -54,7 +54,7 @@ router.put("/updatePassword/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const user = await userService.createUser(req.body);
+    const user = await userService.createUser(req);
     res.status(201).json(user);
   } catch (error) {
     res.status(500).json({ error: error.message });

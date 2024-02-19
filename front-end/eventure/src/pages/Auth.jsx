@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { postRegister } from '../services/EndpointService'; // Adjust path as needed
+import { postRegister } from '../services/EndpointService';
 import { useMessage } from '../contexts/MessageContext';
 
 function Auth() {
@@ -21,7 +21,7 @@ function Auth() {
     event.preventDefault();
 
     // Simple front-end validation (e.g., check if fields are filled)
-    if (!email || !password || !name) {
+    if (!isLogin && (!email || !password || !name))  {
       showMessage('Invalid fields! Please check all the fields.','error');
       return;
     }
@@ -41,7 +41,7 @@ function Auth() {
       } else {
         // Call register service
         const response = await postRegister({ name, email, password });
-        console.log('Registration Success:', response);
+        console.log('Registration Success:', response.data);
         showMessage('Registration Success!','success');
 
         setIsLogin(!isLogin);

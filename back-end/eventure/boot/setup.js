@@ -17,6 +17,7 @@ const validator = require("../middleware/validator");
 const authRoutes = require("../routes/auth.routes");
 const userRoutes = require("../routes/user.routes");
 const eventRoutes = require("../routes/event.routes");
+const taskRoutes = require("../routes/task.routes");
 
 // mongoDB connection
 try {
@@ -55,6 +56,7 @@ const registerCoreMiddleWare = async () => {
     // Route registration
     app.use("/api/v1/users", userRoutes);
     app.use("/api/v1/events", eventRoutes);
+    app.use("/api/v1/tasks", taskRoutes);
 
     // 404 handling
     app.use(notFound);

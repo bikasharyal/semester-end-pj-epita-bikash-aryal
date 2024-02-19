@@ -29,6 +29,10 @@ const userSchema = new mongoose.Schema(
     contact: String,
     address: String,
     preferences: String,
+    needPasswordUpdate: {
+      type: Boolean,
+      default: false // Set a default value for isActive
+    },
     isActive: {
       type: Boolean,
       default: true // Set a default value for isActive

@@ -1,14 +1,6 @@
 // models/eventModel.js
 const mongoose = require("mongoose");
 
-const participantSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  role: String
-});
-
 const eventSchema = new mongoose.Schema(
   {
     title: String,
@@ -24,7 +16,12 @@ const eventSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    participants: [participantSchema],
+    participants: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ],
     tasks: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Task'
