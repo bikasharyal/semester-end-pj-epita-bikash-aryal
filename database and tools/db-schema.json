@@ -1,0 +1,69 @@
+
+//Collections and Document Structures
+
+{
+    // Users Collection
+    // Stores user information. Each user document might look like this
+
+    {
+        "_id": "<ObjectId>",
+        "name": "User's Name",
+        "email": "user@example.com",
+        "password": "hashed_password",
+        "role": "participant",
+        "contact": "user_contact_information",
+        "address": "user_address",
+        "preferences": "user_preferences"
+    },
+
+    //Events Collection
+    //Stores event information. Each event document might reference user IDs in the participants array:
+
+    {
+        "_id": "<ObjectId>",
+        "title": "Event Title",
+        "description": "Event Description",
+        "date": "<ISODate>",
+        "location": "Event Location",
+        "type": "Conference",
+        "creatorId": "<ObjectId>", // Reference to the user who created the event
+        "participants": [
+            {
+                "userId": "<ObjectId>", // Reference to a user document
+                "role": "Speaker"
+            }
+            // ... potentially more participant subdocuments
+        ],
+        "tasks": [
+            "<ObjectId>" // Reference to tasks related to this event
+        ],
+        "agenda": [
+            // Agenda items, can be structured depending on requirements
+        ]
+    },
+
+    //Tasks Collection
+    //Stores tasks related to events. Each task document might reference event and user IDs:
+
+    {
+        "_id": "<ObjectId>",
+        "title": "Task Title",
+        "description": "Task Description",
+        "status": "Pending",
+        "deadline": "<ISODate>",
+        "eventId": "<ObjectId>", // Reference to an event document
+        "assignedTo": "<ObjectId>" // Reference to a user document
+    },
+
+    //Messages Collection
+    //Stores messages for the real-time chat feature:
+
+    {
+        "_id": "<ObjectId>",
+        "eventId": "<ObjectId>", // Reference to an event document
+        "senderId": "<ObjectId>", // Reference to the sender's user document
+        "receiverId": "<ObjectId>", // Reference to the receiver's user document, could be null if it's a public message
+        "text": "Message text",
+        "timestamp": "<ISODate>"
+    }
+}

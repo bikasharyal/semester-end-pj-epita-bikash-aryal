@@ -19,6 +19,8 @@ const userRoutes = require("../routes/user.routes");
 const eventRoutes = require("../routes/event.routes");
 const taskRoutes = require("../routes/task.routes");
 
+// const verifyToken = require("../middleware/authentication");
+
 // mongoDB connection
 try {
   mongoose.connect("mongodb://127.0.0.1:27017/eventure");

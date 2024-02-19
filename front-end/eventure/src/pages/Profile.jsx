@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useMessage } from '../contexts/MessageContext';
 import { getUser, updateUser, updateUserPassword, getEventByUserId } from "../services/EndpointService";
+import AdminPanel from '../components/AdminPanel';
+import Footer from './Footer';
 
 function Profile() {
   const { userId } = useAuth();
@@ -68,82 +70,85 @@ function Profile() {
   }
 
   return (
-    <div className="bg-gray-200 min-h-screen p-8">
-      <div className="container mx-auto max-w-6xl bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <h1 className="text-2xl font-bold text-gray-700 text-left mb-4">Profile Management</h1>
+    <div className="flex min-h-screen bg-gray-200">
+      <AdminPanel/>
+      <div className="flex-1 p-8">
+        <div className="container mx-auto max-w-6xl bg-gray-100 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <h1 className="text-2xl font-bold text-gray-700 text-left mb-4">Profile Management</h1>
 
-        {/* Display Email (non-editable) */}
-        <DisplayField label="Email" value={user.email} />
+          {/* Display Email (non-editable) */}
+          <DisplayField label="Email" value={user.email} />
 
-        {/* Editable fields */}
-        {editMode ? (
-          <>
-            <InputField label="Name" name="name" value={user.name} onChange={handleChange} />
-            <InputField label="Contact" name="contact" value={user.contact} onChange={handleChange} />
-            <InputField label="Address" name="address" value={user.address} onChange={handleChange} />
-            <InputField label="Preferences" name="preferences" value={user.preferences} onChange={handleChange} />
-          </>
-        ) : (
-          <>
-            <DisplayField label="Name" value={user.name} />
-            <DisplayField label="Contact" value={user.contact} />
-            <DisplayField label="Address" value={user.address} />
-            <DisplayField label="Preferences" value={user.preferences} />
-          </>
-        )}
+          {/* Editable fields */}
+          {editMode ? (
+            <>
+              <InputField label="Name" name="name" value={user.name} onChange={handleChange} />
+              <InputField label="Contact" name="contact" value={user.contact} onChange={handleChange} />
+              <InputField label="Address" name="address" value={user.address} onChange={handleChange} />
+              <InputField label="Preferences" name="preferences" value={user.preferences} onChange={handleChange} />
+            </>
+          ) : (
+            <>
+              <DisplayField label="Name" value={user.name} />
+              <DisplayField label="Contact" value={user.contact} />
+              <DisplayField label="Address" value={user.address} />
+              <DisplayField label="Preferences" value={user.preferences} />
+            </>
+          )}
 
-        <div className="flex items-center justify-between">
-          {!editMode && (<button onClick={toggleEditMode} className="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-blue-700">
-            Edit Profile
-          </button>)}
-          {editMode && (<button onClick={toggleEditMode} className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-blue-700">
-            Cancel Profile Edit
-          </button>)}
-          {editMode && (
-            <button onClick={handleSaveChanges} className="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-red-700">
-              Save Profile
+          <div className="flex items-center justify-between">
+            {!editMode && (<button onClick={toggleEditMode} className="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-blue-700">
+              Edit Profile
+            </button>)}
+            {editMode && (<button onClick={toggleEditMode} className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-blue-700">
+              Cancel Profile Edit
+            </button>)}
+            {editMode && (
+              <button onClick={handleSaveChanges} className="bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-red-700">
+                Save Profile
+              </button>
+            )}
+            {!changePasswordMode &&(
+            <button onClick={toggleChangePasswordMode} className="bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-yellow-700">
+              Change Password
             </button>
-          )}
-          {!changePasswordMode &&(
-          <button onClick={toggleChangePasswordMode} className="bg-yellow-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-yellow-700">
-            Change Password
-          </button>
-          )}
-          {changePasswordMode &&(
-            <button onClick={toggleChangePasswordMode} className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-red-700">
-            Cancel Change Password
-          </button>
-          )}
-        </div>
-
-        {changePasswordMode && (
-          <div className='mt-5 bg-gray-200 p-10'>
-            <InputField label="Old Password" name="oldPassword" value={passwords.oldPassword} onChange={handlePasswordChange} type="password" />
-            <InputField label="New Password" name="newPassword" value={passwords.newPassword} onChange={handlePasswordChange} type="password" />
-            <button onClick={handleChangePassword} className="mt-4 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-green-700">
-              Update Password
+            )}
+            {changePasswordMode &&(
+              <button onClick={toggleChangePasswordMode} className="bg-red-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-red-700">
+              Cancel Change Password
             </button>
+            )}
           </div>
-        )}
 
-        <h2 className="text-xl font-bold text-gray-700 text-left mt-8 mb-4">Past Events</h2>
-        {/* Add Past Events Table */}
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {pastEvents.map(event => (
-              <tr key={event._id}>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(event.date).toLocaleDateString()}</td>
+          {changePasswordMode && (
+            <div className='mt-5 bg-gray-200 p-10'>
+              <InputField label="Old Password" name="oldPassword" value={passwords.oldPassword} onChange={handlePasswordChange} type="password" />
+              <InputField label="New Password" name="newPassword" value={passwords.newPassword} onChange={handlePasswordChange} type="password" />
+              <button onClick={handleChangePassword} className="mt-4 bg-green-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline hover:bg-green-700">
+                Update Password
+              </button>
+            </div>
+          )}
+
+          <h2 className="text-xl font-bold text-gray-700 text-left mt-8 mb-4">Past Events</h2>
+          {/* Add Past Events Table */}
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {pastEvents.map(event => (
+                <tr key={event._id}>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{event.title}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{new Date(event.date).toLocaleDateString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

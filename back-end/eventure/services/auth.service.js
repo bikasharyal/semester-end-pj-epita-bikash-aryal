@@ -51,18 +51,19 @@ const login = async (req, res) => {
     if (!bcrypt.compareSync(password, user.password)) {
       return res.status(500).json({ message: "incorrect password" });
     }
-
-    req.session.user = {
-      _id: user._id,
-    };
+    
+    // req.session.user = {
+    //   _id: user._id,
+    // };
 
     // const token = jwt.sign(
-    //   { user: { id: user._id, email: user.email } },
+    //   { user: { id: user._id, email: user.email} },
     //   process.env.JWT_SECRET_KEY,
     //   {
-    //     expiresIn: "1h",
+    //     expiresIn: "10h",
     //   }
     // );
+    //return res.status(200).json({ "token": token, userId:user._id, userRole:user.role });
 
     return res.status(200).json({ "token": "tt-3s4d5f6ghujsjfhskjdhfkjhska7y8u3wirs4d5f6g7hijmnsbdhf", userId:user._id, userRole:user.role });
   }

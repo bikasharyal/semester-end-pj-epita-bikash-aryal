@@ -63,23 +63,23 @@ function Auth() {
         <form onSubmit={handleSubmit}>
           {!isLogin && (
             <div className="mb-4 bg-gray-200 p-2 rounded">
-            <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2 text-left">Full Name</label>
+            <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2 text-left">Full Name <span className="text-red-700 text-sm font-bold">*</span></label>
             <input type="text" id="name" name="name" required value={name} onChange={(e) => setFullName(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100" />
           </div>)} 
           <div className="mb-4 bg-gray-200 p-2 rounded">
-            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2 text-left">Email</label>
+            <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2 text-left">Email <span className="text-red-700 text-sm font-bold">*</span></label>
             <input type="email" id="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100" />
           </div>                            
           <div className="mb-4 bg-gray-200 p-2 rounded">
-            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2 text-left">Password</label>
+            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2 text-left">Password<span className="text-red-700 text-sm font-bold">*</span></label>
             <input type="password" id="password" name="password" required value={password} onChange={(e) => setPassword(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100" />
           </div>
           {!isLogin && (            
             <div className="mb-4 bg-gray-200 p-2 rounded">
-            <label htmlFor="confirmPassword" className="block text-gray-700 text-sm font-bold mb-2 text-left">Password</label>
+            <label htmlFor="confirmPassword" className="block text-gray-700 text-sm font-bold mb-2 text-left">Confirm Password<span className="text-red-700 text-sm font-bold">*</span></label>
             <input type="password" id="confirmPassword" name="confirmPassword" required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-100" />
           </div>

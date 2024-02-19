@@ -44,12 +44,20 @@ function Dashboard() {
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Upcoming Events</h2>
           {upcomingEvents.length ? (
             upcomingEvents.map((event) => (
-              <div key={event._id} className="bg-gray-100 rounded p-4 mb-2">{event.title}: {event.description} - Date: {new Date(event.date).toLocaleDateString()} - Location: {event.location}</div>
+              <div key={event._id} className="bg-gray-100 rounded p-4 mb-2">
+                <div className="flex items-center font-bold justify-between">
+                  <span className="font-bold">{event.title}</span>
+                  <span className="ml-4">{`Date: ${new Date(event.date).toLocaleDateString()}`}</span>
+                  <span className="ml-4">{`Venue: ${event.location}`}</span>
+                </div>
+                <p className="mt-2">{event.description}</p>
+              </div>
             ))
           ) : (
             <p>No upcoming events found.</p>
           )}
         </div>
+
         <div className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Your Tasks</h2>
           {tasks.length ? (

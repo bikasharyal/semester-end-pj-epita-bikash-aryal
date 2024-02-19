@@ -10,7 +10,6 @@ import EventCreate from './pages/EventCreate';
 import EventDetails from './pages/EventDetails';
 import TaskCreate from './pages/TaskCreate';
 import Home from './pages/Home';
-import Footer from './pages/Footer';
 import Profile from './pages/Profile';
 import Auth from './pages/Auth';
 import Events from './pages/Events';
@@ -28,18 +27,18 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="/create-event" element={<PrivateRoute><EventCreate /></PrivateRoute>} />
-            <Route path="/events" element={<PrivateRoute><Events /></PrivateRoute>} />
             <Route path="/event-details" element={<PrivateRoute><EventDetails /></PrivateRoute>} />
             <Route path="/create-task" element={<PrivateRoute><TaskCreate /></PrivateRoute>} />
-            <Route path="/tasks" element={<PrivateRoute><Tasks /></PrivateRoute>} />
             <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+            <Route path="/events" element={<AdminRoute><Events /></AdminRoute>} />
+            <Route path="/tasks" element={<AdminRoute><Tasks /></AdminRoute>} />
             <Route path="/users" element={<AdminRoute><Users /></AdminRoute>} />
-            <Route path="/create-user" element={<PrivateRoute><User /></PrivateRoute>} />
+            <Route path="/users/new" element={<AdminRoute><User /></AdminRoute>} />
+            <Route path="/users/edit/:id" element={<AdminRoute><User /></AdminRoute>} />
             <Route path="/login" element={<Auth />} />
             <Route path="/signup" element={<Auth />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-          <Footer/>
         </Router>
       </AuthProvider>
     </MessageProvider>

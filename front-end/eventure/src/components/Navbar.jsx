@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCode } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../contexts/AuthContext';
+import PopUpMessage from './PopUpMessage';
 
 function Navbar() {
   const { isAuthenticated, logout } = useAuth();
@@ -17,13 +18,13 @@ function Navbar() {
           <Link to="/dashboard" className="hover:text-blue-400">Dashboard</Link>
         </li>
         <li>
-          <Link to="events" className="hover:text-blue-400">Events</Link>
+          <Link to="create-event" className="hover:text-blue-400">Event</Link>
         </li>
         <li>
           <Link to="/event-details" className="hover:text-blue-400">Event Details</Link>
         </li>
         <li>
-          <Link to="/tasks" className="hover:text-blue-400">Tasks</Link>
+          <Link to="/create-task" className="hover:text-blue-400">Task</Link>
         </li>
         <li>
           <Link to="/profile" className="hover:text-blue-400">Profile</Link>
@@ -36,6 +37,7 @@ function Navbar() {
           <Link to="/login" className="hover:text-blue-400">Login</Link>
         )}
       </div>
+      <PopUpMessage />
     </nav>
   );
 }

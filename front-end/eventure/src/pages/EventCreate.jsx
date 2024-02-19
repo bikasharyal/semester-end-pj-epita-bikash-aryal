@@ -49,6 +49,8 @@ function EventCreate() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    showMessage('clicked submit','error');
+
     if (!formData.title || !formData.date || !formData.eventManagerId) {
       showMessage('Please fill in all required fields.','error')
       return;
